@@ -4,7 +4,7 @@
 
 **Tech Stack:** Node.js · Express.js · SQLite · EJS · HTML · CSS · JavaScript
 
-🎬 **[Video Demo]()** 
+🎬 **[Video Demo](https://drive.google.com/file/d/1m425b-uHj_1EwIDiUG_DVbUU8Ez_HXH_/view?usp=sharing)** 
 
  📄 **[View Report](docs/report.pdf)**
 
