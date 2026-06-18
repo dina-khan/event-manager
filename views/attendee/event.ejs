@@ -1,0 +1,115 @@
+<!-- Attendee Event Page Template  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  type="text/css" href="/main.css" />
+        <title>Attendee Event Page</title>
+    </head>
+                
+    
+
+    <body>
+        <nav>
+            <!-- Link back to attendee home page -->
+            <a href="/attendee">
+                <button>
+                    <!-- left arrow symbol -->
+                    &larr;
+                    Attendee Home Page
+                </button>
+            </a>
+        </nav>
+
+        <header>
+            <h1>Attendee Event Page</h1>
+        </header>
+        <hr>
+        
+        <!-- Booking form -->
+
+        <!-- Form validation is inspired by https://www.w3schools.com/js/js_validation.asp 
+        The form is submitted if checkTickets returns true (if a ticket is selected).
+        The function checkTickets is defined in the script 'public/script.js'-->
+        <form onsubmit="return checkTickets();" class="form" 
+        action="/attendee/event/<%= event.event_id %>" method="POST">
+
+            <!-- Inserting event details (title, description, date) 
+                from the event object -->
+            <h3>Event Details</h3>
+            <b>"<%= event.event_title %>"</b><br> 
+            <%= event.event_description %><br><br>
+            &#128337; <!-- clock symbol -->
+            <%= event.event_date %>
+            <hr>
+
+            <!-- Attendee details  -->
+            <h3>Booking Details</h3>
+            Name<br>
+            <!-- Attendee name input -->
+            <input type="text" name="name" required/><br>
+            Email<br>
+            <!-- Attendee email input -->
+            <input type="email" name="email" required/><br>
+            <hr>
+
+            <!-- Ticket information -->
+            <h3>Tickets</h3>
+
+            <!-- Div for full price and concession ticket 
+                information displayed side by side -->
+            <div style = "display:flex;">
+
+                <!-- Div for full price ticket information -->
+                <div style = "width: 100%;">
+
+                    <!-- Inserting price from the event object -->
+                    Full Price ($ <%= event.event_full_tickets_price %>)<br>
+
+                    <!-- Required numerical input for full price tickets quantity.
+                        Setting minimum input to 0, and maximum input to the 
+                        remaining full price tickets from the event object-->
+                    <input required type="number"
+                    name="full_tickets_quantity" id = "full_tickets_quantity"
+                    min="0" max="<%= event.event_full_tickets_quantity %>"><br>
+                
+                    <!-- Inserting the number of remaining 
+                        full price tickets from the event object -->
+                    <%= event.event_full_tickets_quantity %> remaining
+                </div><hr>
+
+                <!-- Div for concession ticket information -->
+                <div style = "width: 100%;">
+
+                    <!-- Inserting price from the event object -->
+                    Concession Price ($ <%= event.event_concession_tickets_price %>)<br>
+                    
+                    <!-- Required numerical input for concession tickets quantity.
+                        Setting minimum input to 0, and maximum input to the 
+                        remaining concession tickets from the event object-->
+                    <input required type="number"
+                    name="concession_tickets_quantity" id = "concession_tickets_quantity"
+                    min="0" max="<%= event.event_concession_tickets_quantity %>"><br>
+
+                    <!-- Inserting the number of remaining 
+                        concession tickets from the event object -->
+                    <%= event.event_concession_tickets_quantity %> remaining<br>
+                </div>
+        
+            </div>
+
+            <!-- Book button to submit form -->
+            <button type="submit">Book</button>
+
+        </form>
+
+        <!-- Link to JavaScript file for containing form validation logic -->
+        <script src="/script.js"></script>
+    </body>
+
+
+</html>
+    

@@ -1,0 +1,62 @@
+<!-- Attendee Home Page Template  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  type="text/css" href="/main.css" />
+        <title>Attendee Home Page</title>
+    </head>
+        
+
+    <body>
+        <header>
+            <h1>Attendee Home Page</h1>
+            <!-- Inserting the site name and description 
+                from the siteSettings object -->
+            <h2><%= siteSettings.site_settings_name %></h2>
+            <p><%= siteSettings.site_settings_description %></p>
+        </header>
+        <hr>
+        
+        <h2>Published Events</h2>
+        Click on an event below to redirect to its attendee event page
+
+
+        <!-- Sorting the events objects by dates, so the next date appears at the top -->
+        <% events.sort((a, b) => new Date(a.date) - new Date(b.date)); %>
+
+
+
+        <!-- Iterating over the array of objects events,
+            to display the link for each event containing event details -->
+        <% events.forEach(event => { %>
+
+            <!-- Link to attendee event page for the event -->
+            <!-- This link contains a div for event details -->
+            <!-- Styling the link so that it does not affect the inner div style -->
+            <a style = "text-decoration: none; width:100%; display: block;" 
+            href="/attendee/event/<%= event.event_id %>">
+
+                <!-- Div for event details, the class "box" is used to apply style.
+                Additional in-line styling is used to set the background colour of the box -->
+                <div class="box" style="background-color: palevioletred;">
+                    <!-- inserting event object title -->
+                    <b><%= event.event_title %></b><br><br>
+                    <!-- inserting event object description -->
+                    <%= event.event_description %><br><br>
+                    <!-- clock symbol -->
+                    &#128337; 
+                    <!-- inserting event object date -->
+                    <%= event.event_date %> 
+                </div>
+            </a>
+
+        <% }) %>
+    </body>
+
+
+</html>
+    

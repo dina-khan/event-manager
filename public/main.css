@@ -1,0 +1,95 @@
+/* Styling entire body */
+body {
+    background-color:mistyrose;
+    color:rgb(50, 0, 0);
+    text-align: center;
+    place-items: center;
+    font-family:Cambria;
+}
+
+/* Styles for a "box" class, 
+ * which appears as a card with a shadow.
+ * It is used to contain other groups of elements 
+ * such as event details */
+.box {
+    box-shadow:10px 10px 10px black;
+    width:90%;
+    margin:3%;
+    min-height:200px;
+    text-align:center;
+    font-family: 'Courier New';
+    padding:10px;
+    align-content: center;
+}
+
+/* Removing the shadow of the box when the 
+ * mouse hovers over it */
+.box:hover {
+    box-shadow:none;
+}
+
+/* Styles for a "form" class.
+ * These styles are used for some form elements */
+.form {
+    background-color: white;
+    border-style:double;
+    border-width: thick;
+    border-radius: 5%;
+    width: 50%;
+    border-color:darkred;
+}
+
+/* Styling all button elements */
+button {
+    font-size: 30px;
+    border-style:groove;
+    border-width: thick;
+    margin: 10px;
+    background-color:darkred;
+    color: lavenderblush;
+    border-color:lavenderblush;
+}
+
+/* Changing the border colour of button
+ * elements when the mouse hovers over them */
+button:hover {
+    border-color:brown;
+}
+
+/* Styling all input, textarea and select elements */
+input, 
+textarea,
+select {
+    background-color: mistyrose;
+    font-family: 'Courier New';
+}
+
+/* Styling input elements */
+input {
+    width:50%;
+}
+
+/* Styling textarea elements */
+textarea {
+    width:90%;
+    min-height:100px;
+}
+
+/* Styling all link elements to have a brown colour */
+a {
+    color: rgb(50, 0, 0);;
+}
+
+/* Styling all nav elements */
+nav {
+    width:90%;
+    text-align: left;
+    padding-right:5%;
+    padding-left:5%;
+}
+
+/* Setting the line colour of horizontal rules
+ * used for seperating content */
+hr {
+    border-color:darkred;
+}

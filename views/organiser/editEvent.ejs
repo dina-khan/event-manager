@@ -1,0 +1,139 @@
+<!-- Organiser Edit Event Page Template  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  type="text/css" href="/main.css" />
+        <title>Organiser Edit Event Page</title>
+    </head>
+    
+
+
+    <body>
+        <nav>
+            <!-- Back button to organiser home page -->
+            <a href='/organiser'>
+                <button>
+                    <!-- Left arrow symbol -->
+                    &larr; 
+                    Organiser Home Page
+                </button>
+            </a>
+        </nav>
+
+        <header>
+            <h1>Organiser Edit Event Page</h1>
+        </header>
+
+        <hr>
+
+        <!-- Styling div containing timestamps to appear at top left of form -->
+        <div style = "width:50%; text-align: left">
+            <!-- Inserting event creation timestamp from event object -->
+            Created: <%= event.event_created %> (UTC)<br>
+            <!-- Inserting last modified timestamp from event object-->
+            Last modified: <%= event.event_last_modified %> (UTC)<br><br>
+        </div>
+
+        <!-- Edit Event Form -->
+        <!-- The class "form" is used for styling -->
+        <form class = "form" action="/organiser/edit/<%= event.event_id %>" method="POST">
+            
+            <!-- Event details (title, description, date) -->
+            <h3>Event Details</h3>
+
+            <b>Title</b><br>
+            <!-- Required textual input for event title,
+                its placeholder value (current event title)
+                is inserted from the event object-->
+            <input required type="text" name="title" 
+            value="<%= event.event_title %>"><br>
+        
+            <b>Description</b><br>
+            <!-- Required text input for event description,
+                its placeholder value (current event description)
+                is inserted from the event object-->
+            <textarea required name="description"><%= event.event_description %></textarea><br>
+        
+            <b>Date</b><br>
+            <!-- Required date input for event date,
+                its placeholder value (current event date)
+                is inserted from the event object-->
+            <input required type="date" name="date" 
+            value="<%= event.event_date %>"><br>
+            <hr>
+        
+            <!-- Heading for tickets -->
+            <h3>Tickets</h3>
+
+            <!-- Div for full price and concession ticket 
+                information placed side by side -->
+            <div style = "display:flex;">
+
+                <!-- Div for full price tickets information -->
+                <div style = "width: 100%;">
+
+                    <b>Full Price</b><br>
+
+                    price ($)<br>
+                    <!-- Required numerical input for ticket price
+                        its placeholder value (current ticket price)
+                        is inserted from the event object. The minimum price
+                        is set to 0. Step is set to "any" to allow decimal values -->
+                    <input required type="number" name="event_full_tickets_price" 
+                    value="<%= event.event_full_tickets_price %>" 
+                    min = "0" step="any"><br>
+
+                    quantity <br>
+                    <!-- Required numerical input for initial ticket quantity 
+                        its placeholder value (current initial ticket quantity)
+                        is inserted from the event object. The minimum price
+                        is set to 0. Note that step is not set to "any" 
+                        so that the quantity can only assume integer values -->
+                    <input required type="number" min = "0"
+                    name="event_full_tickets_quantity" 
+                    value="<%= event.event_full_tickets_start_quantity %>"><br>
+            
+                </div><hr>
+
+                <!-- Div for concession tickets information -->
+                <div style = "width: 100%;">
+
+                    <b>Concession</b><br>
+
+                    price ($) <br>
+                    <!-- Required numerical input for ticket price
+                        its placeholder value (current ticket price)
+                        is inserted from the event object. The minimum price
+                        is set to 0. Step is set to "any" to allow decimal values -->
+                    <input required type="number" name="event_concession_tickets_price"
+                    value="<%= event.event_concession_tickets_price %>" 
+                    min = "0" step="any"><br>
+
+                    quantity <br>
+                    <!-- Required numerical input for initial ticket quantity 
+                        its placeholder value (current initial ticket quantity)
+                        is inserted from the event object. The minimum price
+                        is set to 0. Note that step is not set to "any" 
+                        so that the quantity can only assume integer values -->
+                    <input required type="number" min = "0"
+                    name="event_concession_tickets_quantity"
+                    value="<%= event.event_concession_tickets_start_quantity %>"><br><br>
+
+                </div>
+
+            </div>
+        
+            <!-- Submit Changes button to submit form-->
+            <button type="submit">Submit Changes</button><br>
+
+        </form>
+        
+    </body>
+
+</html>
+    
+    

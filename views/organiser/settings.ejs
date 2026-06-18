@@ -1,0 +1,60 @@
+<!-- Organiser Site Settings Page Template  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  type="text/css" href="/main.css" />
+        <title>Organiser Site Settings Page</title>
+    </head>
+    
+
+    <body>
+        <nav>
+            <!-- Link back to organiser home page -->
+            <a href="/organiser">
+                <button>
+                    <!-- left arrow symbol -->
+                    &larr;
+                    Organiser Home Page
+                </button>
+            </a>
+        </nav>
+
+        <header>
+            <h1>Site Settings Page</h1>
+        </header>
+        <hr><br>
+        
+        <!-- Site Settings Form -->
+        <!-- The class "form" is used for styling -->
+        <form class = "form" action="/organiser/site-settings" method="POST">
+
+            <b>Site Name:</b><br>
+            <!-- Required textual input for the site name,
+                its placeholder value (current site name) 
+                is inserted from the siteSettings object-->
+            <input required type="text" name="name" 
+            value="<%= siteSettings.site_settings_name %>" /><br><br>
+
+            <b>Site Description:</b><br>
+            <!-- Required text input for the site description,
+                Its placeholder value (current site description) 
+                is inserted from the siteSettings object -->
+            <textarea required name="description">
+                <%= siteSettings.site_settings_description %>
+            </textarea><br><br>
+
+            <!-- Save changes button to submit the form -->
+            <button type="submit">Save Changes</button>
+
+        </form>
+
+    </body>
+
+
+</html>
+    
+    

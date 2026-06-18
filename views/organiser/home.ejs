@@ -1,0 +1,253 @@
+<!-- Organiser Home Page Template  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  type="text/css" href="/main.css" />
+        <title>Organiser Home Page</title>
+    </head>
+    
+
+    <body>
+        <nav style = "text-align:right;">
+            <!-- Link to site settings page -->
+            <b><a href="/organiser/site-settings">
+                Site Settings
+                <!-- Right arrow symbol -->
+                &rarr;
+            </a></b>
+        </nav>
+
+        <header>
+            <h1>Organiser Home Page</h1>
+            <!-- Inserting the site name and description 
+            from the siteSettings object -->
+            <h2><%= siteSettings.site_settings_name %></h2>
+            <%= siteSettings.site_settings_description %>
+        </header>
+        <hr>
+        
+        <!-- Create new event button -->
+        <a href="/organiser/create">
+            <button>Create New Event</button>
+        </a>
+
+        <!-- Div for published events and draft events 
+            displayed side by side -->
+        <div style = "display: flex; width: 100%;">
+
+            <!-- Div for published events -->
+            <div   style = "width:100%;">
+
+                <h2>Published Events</h2>
+
+                <!-- Iterating over the array of objects of published events -->
+                <% publishedEvents.forEach(event => { %>
+
+                    <!-- Div for individual published event. 
+                        The class "box" is used to apply style.
+                        Additional in-line styling is used to set 
+                        the background colour of the box -->
+                    <div class = "box"  style = "background-color: palevioletred;">
+                        
+                        <!-- This div contains a dropdown menu of attendees, 
+                            and a link to the attendee event page (side by side)-->
+                        <div style = "display:flex; justify-content: space-between;">
+
+                            <!-- Dropdown menu for attendees booking details -->
+
+                            <!-- Setting the selected index to 0 so that the first option
+                                "Attendees" is always selected. I learnt how to keep an option selected  
+                                from https://www.w3schools.com/jsref/prop_select_selectedindex.asp -->
+                            <select onchange="this.selectedIndex = 0;">
+                                
+                                <!-- The first option contains the text 'Attendees' -->
+                                <option>Attendees</option> 
+
+                                <!-- Iterating over each item in event.bookings -->
+                                <% event.bookings.forEach(booking => { %>
+                                    <!-- Storing the attendee name in an option -->
+                                    <option><%= booking.booking_name %></option> 
+                                    <!-- Storing the attendee email in an option -->
+                                    <option><%= booking.booking_email %></option>
+                                    <!-- Storing the number of booked full price tickets in an option -->
+                                    <option><%= booking.booking_full_tickets %> Full Price Tickets</option>
+                                    <!-- Storing the number of booked concession tickets in an option -->
+                                    <option><%= booking.booking_concession_tickets %> Concession Price Tickets</option>
+                                    <!-- Leaving an empty option to give space between different bookings -->
+                                    <option> </option>
+                                <% }); %>
+                            </select>
+
+                            <!-- Link to attendee event page -->
+                            <a href="/attendee/event/<%= event.event_id %>">
+                                Attendee link 
+                                <!-- right arrow symbol -->
+                                &rarr;
+                            </a>
+
+                        </div>
+
+                        <!-- Inserting event details (title, description, date)
+                             from event object -->
+                        <h3>Event Details</h3>
+                        <b>"<%= event.event_title %>"</b><br>
+                        <%= event.event_description %><br><br>
+                        <b>Date: </b><%= event.event_date %>  
+                        <hr>
+                        
+                        <!-- Inserting timestamp details (created, last modified, published)
+                             from event object -->
+                        <h3>History</h3>
+                        <b>Created: </b><%= event.event_created %> (UTC)<br>
+                        <b>Last Modified: </b><%= event.event_last_modified %> (UTC)<br>
+                        <b>Published: </b><%= event.event_published %> (UTC)<br>
+                        <hr>
+
+                        <!-- Ticket information -->
+                        <h3>Tickets</h3>
+
+                        <!-- Div for full price and concession ticket 
+                            information displayed side by side -->
+                        <div style = "display:flex;">
+
+                            <!-- Div for full price ticket information,
+                                 inserted from event object -->
+                            <div style = "width: 100%">
+                                <b>Full-Price</b><br>
+                                <!-- remaining ticket quantity -->
+                                <%= event.event_full_tickets_quantity %> of 
+                                <!-- initial ticket quantity -->
+                                <%= event.event_full_tickets_start_quantity %> remaining for 
+                                <!-- ticket price -->
+                                $<%= event.event_full_tickets_price %><br><br>
+                            </div><hr>
+
+                            <!-- Div for concession ticket information,
+                                 inserted from event object -->
+                            <div style = "width: 100%">
+                                <b>Concession</b><br>
+                                <!-- remaining ticket quantity -->
+                                <%= event.event_concession_tickets_quantity %> of 
+                                <!-- initial ticket quantity -->
+                                <%= event.event_concession_tickets_start_quantity %>  remaining for 
+                                <!-- ticket price -->
+                                $<%= event.event_concession_tickets_price %><br><br>
+                            </div>  
+                        </div>
+                        <hr>
+
+                        <!-- Div for delete and unpublish buttons displayed side by side -->
+                        <div style = "display: flex">
+                            <!-- Setting the button routes by inserting the event id from the event object -->
+
+                            <!-- Delete button form -->
+                            <form style = "width: 100%" action="/organiser/delete/<%= event.event_id %>" method="POST">
+                                <button  type = "submit">Delete</button>
+                            </form>
+
+                            <!-- Unpublish button form -->
+                            <form style = "width: 100%" action="/organiser/unpublish/<%= event.event_id %>" method="POST">
+                                <button type = "submit">Unpublish</button>
+                            </form>
+                        </div>  
+                    </div>
+                <% }) %>
+
+            </div><hr>
+
+            <!-- Div for draft events -->
+            <div  style = "width:100%;">
+                <h2>Draft Events</h2>
+
+                <!-- Iterating over the array of objects of draft events -->
+                <% draftEvents.forEach(event => { %>
+
+                    <!-- Div for individual draft event. 
+                        The class "box" is used to apply style.
+                        Additional in-line styling is used to 
+                        set the background colour of the box -->
+                    <div  class = "box" style = "background-color: rosybrown; ">
+
+                        <div  style = "width:100%; text-align: right; ">
+                            <!-- Link to edit event page -->
+                            <a href="/organiser/edit/<%= event.event_id %>">
+                                Edit 
+                                <!-- right arrow symbol -->
+                                &rarr;
+                            </a><br>
+                        </div>
+
+                        <!-- Inserting event details (title, description, date)
+                             from event object -->
+                        <h3>Event Details</h3>
+                        <b>"<%= event.event_title %>"</b><br>
+                        <%= event.event_description %><br><br>
+                        <b>Date: </b><%= event.event_date %>
+                        <hr>
+                        
+                        <!-- Inserting timestamp details (created, last modified)
+                             from event object -->
+                        <h3>History</h3>
+                        <b>Created: </b><%= event.event_created %> (UTC)<br>
+                        <b>Last Modified: </b><%= event.event_last_modified %> (UTC)<br>
+                        <hr>
+                        
+                        <!-- Ticket information -->
+                        <h3>Tickets</h3>
+
+                        <!-- Div for full price and concession ticket 
+                            information displayed side by side -->
+                        <div style = "display:flex;">
+
+                            <!-- Div for full price ticket information,
+                                 inserted from event object -->
+                            <div style = "width: 100%">
+                                <b>Full-Price</b><br>
+                                <!-- total ticket quantity -->
+                                <%= event.event_full_tickets_quantity %> tickets for 
+                                <!-- ticket price -->
+                                $<%= event.event_full_tickets_price %><br><br>
+                            </div><hr>
+
+                             <!-- Div for concession ticket information,
+                                 inserted from event object -->
+                            <div style = "width: 100%">
+                                <b>Concession</b><br>
+                                <!-- total ticket quantity -->
+                                <%= event.event_concession_tickets_quantity %> tickets for 
+                                <!-- ticket price -->
+                                $<%= event.event_concession_tickets_price %><br><br>
+                            </div>  
+                        </div>
+                        <hr>
+                        
+                        <!-- Div for delete and publish buttons displayed side by side -->
+                        <div style = "display: flex">
+                            <!-- Setting the button routes by inserting the event id from the event object -->
+
+                            <!-- Delete button form -->
+                            <form style = "width: 100%" action="/organiser/delete/<%= event.event_id %>" method="POST">
+                                <button type = "submit">Delete</button>
+                            </form>
+
+                            <!-- Publish button form -->
+                            <form style = "width: 100%" action="/organiser/publish/<%= event.event_id %>" method="POST">
+                                <button type = "submit">Publish</button>
+                            </form>
+                        </div>     
+                    </div>
+                <% }) %>
+
+            </div>
+
+        </div>
+    </body>
+
+
+</html>
+    
+    
